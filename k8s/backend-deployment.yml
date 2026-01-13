@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: hrms-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      name: backend-pod
+      namespace: hrms-app
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: hrmsapp-backend
+        image: arbajshaikh/hrms-springboot:latest
+        ports:
+         - containerPort: 8080
+        env:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://mysql-service:3306/hrms
+          - name: SPRING_DATASOURCE_USERNAME
+            value: root
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: root
+          - name: JWT_SECRET
+            value: mysupersecretkeyformyhrmsjwt1234567890
+          - name: JWT_EXPIRATION
+            value: "86400000"
