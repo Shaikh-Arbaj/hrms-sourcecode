@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+
+  mysql-service:
+    image: mysql:8.0
+    container_name: mysql-service
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hrmsportal
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  springboot-service:
+    image: arbajshaikh/hrms-springboot:latest
+    container_name: hrms-backend
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/hrmsportal
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-service
+    networks:
+      - mynetwork
+
+  frontend:
+    image: arbajshaikh/hrms-frontend:latest
+    container_name: hrms-frontend
+    restart: always
+    ports:
+      - "4200:80"
+    depends_on:
+      - springboot-service
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mysql-data:
