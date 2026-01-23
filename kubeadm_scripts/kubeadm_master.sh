@@ -16,7 +16,7 @@ sleep 2
 
 # 3. Install a Network Plugin (Calico)
 echo "Installing Calico network plugin..."
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico-vxlan.yaml
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
 
 # 4. Generate Join Command
 echo "Generating join command for worker nodes..."
