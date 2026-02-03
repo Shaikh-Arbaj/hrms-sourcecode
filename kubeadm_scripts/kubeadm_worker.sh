@@ -3,7 +3,7 @@
 # Execute on ALL of your Worker Nodes
 
 # 1. Perform pre-flight checks and reset the node:
-sudo kubeadm reset pre-flight checks
+sudo kubeadm reset -f
 
 # 2. Paste the join command you got from the master node and append --v=5 at the end:
 # Example:
